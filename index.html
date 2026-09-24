@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Food Choices Analytics | Comprehensive Tableau Case Study</title>
+  <meta name="description" content="A comprehensive data-driven study of college students' food choices, dietary habits, lifestyle patterns, and academic outcomes using Python, Tableau, and modern web analytics.">
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="brand-icon">CF</div>
+        <div>
+          <span style="font-weight:800; letter-spacing:-0.02em;">College Food</span>
+          <span style="color:var(--primary); font-weight:600;">Analytics</span>
+        </div>
+      </div>
+
+      <button class="menu-toggle" aria-label="Toggle navigation">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+
+      <ul class="nav-menu">
+        <li><a class="nav-link active" data-route="home" href="#home">Home</a></li>
+        <li><a class="nav-link" data-route="about" href="#about">About</a></li>
+        <li><a class="nav-link" data-route="explorer" href="#explorer">Data Explorer</a></li>
+        <li><a class="nav-link" data-route="tableau" href="#tableau">Tableau Dashboards</a></li>
+        <li><a class="nav-link" data-route="insights" href="#insights">Insights</a></li>
+        <li><a class="nav-link" data-route="strategies" href="#strategies">Dietary Strategies</a></li>
+        <li><a class="nav-link" data-route="methodology" href="#methodology">Methodology</a></li>
+        <li><a class="nav-link" data-route="dictionary" href="#dictionary">Data Dictionary</a></li>
+        <li><a class="nav-link" data-route="report" href="#report">Report</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a class="btn btn-primary btn-sm" data-route="tableau" href="#tableau">Explore Dashboard</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- ===================================================================
+         VIEW: HOME
+         =================================================================== -->
+    <section id="view-home" class="page-view active">
+      <div class="hero-section">
+        <div class="hero-badges">
+          <span class="hero-badge-item">1,250 Validated Records</span>
+          <span class="hero-badge-item">Tableau Certified Analysis</span>
+          <span class="hero-badge-item">Data Analyst Portfolio</span>
+          <span class="hero-badge-item">End-to-End Case Study</span>
+        </div>
+        <h1 class="hero-title">Comprehensive Analysis and Dietary Strategies with Tableau</h1>
+        <p class="hero-subtitle">
+          A data-driven study of college students' food choices, lifestyle patterns, and academic outcomes. Investigating dietary behaviors across living arrangements, financial constraints, and academic tiers.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" data-route="tableau" href="#tableau">Explore Dashboards</a>
+          <a class="btn btn-secondary" data-route="insights" href="#insights">View Key Insights</a>
+          <a class="btn btn-secondary" data-route="report" href="#report">Read Project Report</a>
+        </div>
+      </div>
+
+      <!-- Core KPI Ribbon -->
+      <div class="section-header">
+        <h2 class="section-title">Executive Cohort Benchmarks</h2>
+        <p class="section-subtitle">Real metrics calculated across N=1,250 validated student records after complete cleaning and deduplication.</p>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Sample Size</div>
+          <div class="kpi-value">1,250</div>
+          <div class="kpi-desc">Validated student records</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Average GPA</div>
+          <div class="kpi-value" style="color:#2563eb;">3.42</div>
+          <div class="kpi-desc">Scale 0.00 – 4.00</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Dietary Health Score</div>
+          <div class="kpi-value" style="color:#10b981;">63.6</div>
+          <div class="kpi-desc">Out of 100 possible points</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Daily Water Intake</div>
+          <div class="kpi-value">2.40 L</div>
+          <div class="kpi-desc">69.7% meeting $\ge 2.0$L target</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Nightly Sleep</div>
+          <div class="kpi-value">6.83 h</div>
+          <div class="kpi-desc">Average school nights</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Frequent Fast Food</div>
+          <div class="kpi-value" style="color:#ef4444;">53.9%</div>
+          <div class="kpi-desc">$\ge 3$ days per week</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Regular Breakfast</div>
+          <div class="kpi-value" style="color:#f59e0b;">37.9%</div>
+          <div class="kpi-desc">$\ge 5$ days per week</div>
+        </div>
+      </div>
+
+      <!-- Interactive Data Pipeline Banner -->
+      <div class="pipeline-container">
+        <div class="section-header" style="margin-bottom:1rem;">
+          <h3 style="font-size:1.2rem; font-weight:700;">Complete Data Analytics Lifecycle</h3>
+          <p style="font-size:0.88rem; color:var(--text-muted);">From raw survey collection to Tableau visualizations, statistical EDA, and actionable dietary interventions.</p>
+        </div>
+        <div class="pipeline-steps">
+          <div class="pipeline-step">
+            <div class="step-num">1</div>
+            <div class="step-name">Data Collection</div>
+            <div class="step-sub">1,250 survey records</div>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-num">2</div>
+            <div class="step-name">Data Cleaning</div>
+            <div class="step-sub">Deduplicated & audited</div>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-num">3</div>
+            <div class="step-name">Statistical EDA</div>
+            <div class="step-sub">Pearson r & hypotheses</div>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-num">4</div>
+            <div class="step-name">Data Modeling</div>
+            <div class="step-sub">Dietary Health Score</div>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-num">5</div>
+            <div class="step-name">Tableau Suite</div>
+            <div class="step-sub">15 sheets, 4 dashboards</div>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-num">6</div>
+            <div class="step-name">Key Insights</div>
+            <div class="step-sub">15 answered questions</div>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="pipeline-step">
+            <div class="step-num">7</div>
+            <div class="step-name">Action Strategies</div>
+            <div class="step-sub">6 institutional plans</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Charts -->
+      <div class="card-grid-2">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Produce Consumption Progression</h3>
+            <span class="badge badge-primary">Dietary Trend</span>
+          </div>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            Average daily servings of fruits and vegetables increase consistently from Freshman to Graduate stages as cooking autonomy increases.
+          </p>
+          <div style="height: 260px; position:relative;">
+            <canvas id="chartHomeProduce"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Dietary Health Score Breakdown</h3>
+            <span class="badge badge-success">Cohort Segments</span>
+          </div>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            Distribution of students across Higher ($\ge 70$), Moderate (45–69), and Lower ($< 45$) Dietary Health Score tiers.
+          </p>
+          <div style="height: 260px; position:relative;">
+            <canvas id="chartHomeDietScore"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+         VIEW: ABOUT
+         =================================================================== -->
+    <section id="view-about" class="page-view">
+      <div class="section-header">
+        <h1 class="section-title">About the Case Study</h1>
+        <p class="section-subtitle">Context, problem definition, analytical scope, and technical infrastructure.</p>
+      </div>
+
+      <div class="card" style="margin-bottom: 2rem;">
+        <h3 style="font-size:1.3rem; margin-bottom:0.75rem; color:var(--text-main);">1. Problem Statement & Motivation</h3>
+        <p>
+          The university years represent a critical developmental crossroad. As emerging adults leave parental supervision, they gain independent autonomy over food purchasing, preparation, and eating schedules. However, college students frequently operate under severe environmental friction: limited kitchen infrastructure in dormitories, demanding lecture and study timetables, financial constraints, and easy proximity to hyper-palatable quick-service fast food establishments.
+        </p>
+        <p style="margin-top:0.75rem;">
+          Poor dietary choices during this window are correlated with cognitive fatigue, sleep disruption, elevated stress, and suboptimal academic outcomes. This project conducts a comprehensive, rigorous case study analyzing students' dietary behaviors, lifestyle patterns, and academic metrics, providing university stakeholders with actionable, data-informed intervention strategies.
+        </p>
+      </div>
+
+      <div class="card-grid-2">
+        <div class="card">
+          <h3 style="font-size:1.15rem; margin-bottom:0.75rem; color:var(--text-main);">Core Objectives</h3>
+          <ul style="padding-left:1.25rem; font-size:0.92rem; color:var(--text-muted); display:flex; flex-direction:column; gap:0.5rem;">
+            <li>Conduct end-to-end data cleaning, anomaly detection, and principled imputation.</li>
+            <li>Formulate an empirical, transparent 0–100 Dietary Health Score.</li>
+            <li>Perform bivariate and multivariate statistical EDA answering 15 analytical questions.</li>
+            <li>Engineer 16 production Tableau calculated fields and 15 analytical worksheets.</li>
+            <li>Build 4 interactive Tableau dashboards addressing executive, behavioral, and academic questions.</li>
+            <li>Formulate 6 practical, institutional dietary strategies for campus health leaders.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size:1.15rem; margin-bottom:0.75rem; color:var(--text-main);">Technology Stack & Tools</h3>
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem;">
+            <span class="badge badge-primary">Tableau Desktop & Public</span>
+            <span class="badge badge-primary">Python 3 (Cleaning & EDA)</span>
+            <span class="badge badge-primary">HTML5 / Modern CSS</span>
+            <span class="badge badge-primary">Vanilla JS / Chart.js</span>
+            <span class="badge badge-primary">Git Version Control</span>
+            <span class="badge badge-secondary">JSON Schema Data Dictionary</span>
+            <span class="badge badge-secondary">Pearson Correlation Testing</span>
+          </div>
+          <p style="margin-top:1rem; font-size:0.88rem; color:var(--text-muted);">
+            Engineered cleanly with zero third-party framework overhead, ensuring standalone offline portability and instant execution in any modern browser.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW: DATA EXPLORER
+         =================================================================== -->
+    <section id="view-explorer" class="page-view">
+      <div class="section-header">
+        <h1 class="section-title">Interactive Data Explorer</h1>
+        <p class="section-subtitle">Filter, search, sort, and inspect all 1,250 anonymized student records. No sensitive personally identifiable information is collected.</p>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="explorer-controls">
+        <div class="explorer-filters">
+          <div class="form-group" style="flex: 2; min-width: 240px;">
+            <label class="form-label" for="searchStudents">Search Student / Major / Diet</label>
+            <input type="text" id="searchStudents" class="form-input" placeholder="e.g. STU-1025, STEM, Vegan, Omnivore...">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="filterGender">Gender</label>
+            <select id="filterGender" class="form-select">
+              <option value="">All Genders</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Non-Binary">Non-Binary</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="filterYear">Year of Study</label>
+            <select id="filterYear" class="form-select">
+              <option value="">All Years</option>
+              <option value="Freshman">Freshman</option>
+              <option value="Sophomore">Sophomore</option>
+              <option value="Junior">Junior</option>
+              <option value="Senior">Senior</option>
+              <option value="Graduate">Graduate</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="filterResidence">Residence</label>
+            <select id="filterResidence" class="form-select">
+              <option value="">All Housing</option>
+              <option value="On-Campus Dormitory">On-Campus Dorm</option>
+              <option value="Off-Campus Apartment">Off-Campus Apt</option>
+              <option value="With Family">With Family</option>
+              <option value="Campus Greek Housing">Greek Housing</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="filterDietCategory">Dietary Tier</label>
+            <select id="filterDietCategory" class="form-select">
+              <option value="">All Tiers</option>
+              <option value="Higher Dietary Score">Higher (>=70)</option>
+              <option value="Moderate Dietary Score">Moderate (45-69)</option>
+              <option value="Lower Dietary Score">Lower (<45)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="filterAcademic">Academic Tier</label>
+            <select id="filterAcademic" class="form-select">
+              <option value="">All GPAs</option>
+              <option value="Excellent">Excellent (>=3.70)</option>
+              <option value="Good">Good (3.30-3.69)</option>
+              <option value="Average">Average (2.80-3.29)</option>
+              <option value="Below Average">Below Average (<2.80)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div style="display:flex; gap:0.5rem;">
+            <button id="resetFiltersBtn" class="btn btn-secondary btn-sm">Reset Filters</button>
+            <button id="exportCsvBtn" class="btn btn-secondary btn-sm">Export Filtered CSV</button>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <span id="explorerCount" style="font-size:0.85rem; font-weight:600; color:var(--text-muted);">Loading students...</span>
+            <select id="rowsPerPageSelect" class="form-select" style="width:auto; padding:0.35rem 0.65rem; font-size:0.82rem;">
+              <option value="15">15 rows</option>
+              <option value="25">25 rows</option>
+              <option value="50">50 rows</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th data-sort="Student_ID">ID ↕</th>
+              <th data-sort="Age">Age / Gender ↕</th>
+              <th data-sort="Year_of_Study">Year ↕</th>
+              <th data-sort="Major">Major ↕</th>
+              <th data-sort="Residence_Type">Residence ↕</th>
+              <th data-sort="GPA">GPA ↕</th>
+              <th data-sort="Dietary_Health_Score">Diet Score ↕</th>
+              <th data-sort="Breakfast_Frequency">Breakfast ↕</th>
+              <th data-sort="Fast_Food_Frequency">Fast Food ↕</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="explorerTableBody">
+            <!-- Dynamically injected rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-controls">
+        <button id="prevPageBtn" class="btn btn-secondary btn-sm">Previous</button>
+        <span id="pageIndicator" style="font-weight:600;">Page 1 of 84</span>
+        <button id="nextPageBtn" class="btn btn-secondary btn-sm">Next</button>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW: TABLEAU DASHBOARDS
+         =================================================================== -->
+    <section id="view-tableau" class="page-view">
+      <div class="section-header">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h1 class="section-title">Tableau Dashboards Suite</h1>
+            <p class="section-subtitle">Interactive visual analytical modules developed in Tableau Desktop for institutional stakeholders.</p>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <a href="../tableau/college_food_choices_analytics.twb" download class="btn btn-primary btn-sm">Download Tableau (.TWB)</a>
+            <a href="../data/cleaned/college_food_choices_clean.csv" download class="btn btn-secondary btn-sm">Download Clean CSV</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Switcher Tabs -->
+      <div class="dashboard-tabs">
+        <button class="dash-tab-btn active" data-tab="dash-executive">1. Executive Overview</button>
+        <button class="dash-tab-btn" data-tab="dash-dietary">2. Dietary Behavior Deep-Dive</button>
+        <button class="dash-tab-btn" data-tab="dash-academic">3. Lifestyle & Academic Performance</button>
+        <button class="dash-tab-btn" data-tab="dash-strategy">4. Dietary Strategy Roadmap</button>
+      </div>
+
+      <!-- Panel 1: Executive Overview -->
+      <div id="dash-executive" class="dashboard-panel active">
+        <div class="dash-viewer-box">
+          <div class="card-header">
+            <div>
+              <h3 style="font-size:1.25rem; font-weight:700;">Dashboard 1: Executive Overview</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">High-level institutional monitoring for Provosts, Deans, and Campus Dining Directors.</p>
+            </div>
+            <span class="badge badge-primary">Tableau Live View</span>
+          </div>
+
+          <div class="card-grid-2">
+            <div class="card" style="box-shadow:none; border:1px solid #e2e8f0;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.75rem; font-weight:700;">Dietary Health Score across Academic Progression</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">Sheet 2 & Sheet 12: Monotonic improvement in diet score from Freshman to Senior year.</p>
+              <div style="height:280px; position:relative;">
+                <canvas id="chartExecDietYear"></canvas>
+              </div>
+            </div>
+
+            <div class="card" style="box-shadow:none; border:1px solid #e2e8f0;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.75rem; font-weight:700;">Weekly Fast Food vs Home Cooked Meals by Residence</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">Sheet 11: On-campus dorms rely heavily on fast food due to minimal kitchenette facilities.</p>
+              <div style="height:280px; position:relative;">
+                <canvas id="chartExecResidence"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: Dietary Behavior -->
+      <div id="dash-dietary" class="dashboard-panel">
+        <div class="dash-viewer-box">
+          <div class="card-header">
+            <div>
+              <h3 style="font-size:1.25rem; font-weight:700;">Dashboard 2: Dietary Behavior Deep-Dive</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Nutritional intake details for Registered Dietitians and Campus Wellness Coordinators.</p>
+            </div>
+            <span class="badge badge-primary">Tableau Live View</span>
+          </div>
+
+          <div class="card-grid-2">
+            <div class="card" style="box-shadow:none; border:1px solid #e2e8f0;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.75rem; font-weight:700;">Breakfast Frequency vs GPA Graded Association</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">Sheet 3: Students consuming breakfast $\ge 6$ days/week maintain significantly higher average GPAs.</p>
+              <div style="height:280px; position:relative;">
+                <canvas id="chartDietBreakfastGPA"></canvas>
+              </div>
+            </div>
+
+            <div class="card" style="box-shadow:none; border:1px solid #e2e8f0;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.75rem; font-weight:700;">Daily Water Intake Distribution & Compliance</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">Sheet 6: Over 30% of the cohort fails to reach the 2.0L minimum daily hydration benchmark.</p>
+              <div style="height:280px; position:relative;">
+                <canvas id="chartDietWaterBox"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3: Lifestyle & Academic -->
+      <div id="dash-academic" class="dashboard-panel">
+        <div class="dash-viewer-box">
+          <div class="card-header">
+            <div>
+              <h3 style="font-size:1.25rem; font-weight:700;">Dashboard 3: Lifestyle Factors & Academic Performance</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Bivariate associations between rest, stress, physical activity, and academic achievement.</p>
+            </div>
+            <span class="badge badge-warning">Correlation Only</span>
+          </div>
+
+          <div class="disclaimer-banner" style="margin-bottom:1rem;">
+            <span>⚠️ <strong>Methodological Guardrail:</strong> Observed statistical correlations quantify co-occurrence within this survey cohort. They do not demonstrate direct biological or cognitive causation.</span>
+          </div>
+
+          <div class="card-grid-2">
+            <div class="card" style="box-shadow:none; border:1px solid #e2e8f0;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.75rem; font-weight:700;">Nightly Sleep Duration vs Cumulative GPA</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">Sheet 7: Optimal GPA performance clusters between 7.0 and 8.0 hours of nightly sleep.</p>
+              <div style="height:280px; position:relative;">
+                <canvas id="chartAcadSleepGPA"></canvas>
+              </div>
+            </div>
+
+            <div class="card" style="box-shadow:none; border:1px solid #e2e8f0;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.75rem; font-weight:700;">Perceived Stress Level vs Fast Food & Diet Score</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">Sheet 13: High stress students average 42% more fast food intake and lower dietary health scores.</p>
+              <div style="height:280px; position:relative;">
+                <canvas id="chartAcadStressDiet"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 4: Dietary Strategy -->
+      <div id="dash-strategy" class="dashboard-panel">
+        <div class="dash-viewer-box">
+          <div class="card-header">
+            <div>
+              <h3 style="font-size:1.25rem; font-weight:700;">Dashboard 4: Dietary Strategy Roadmap & Cohort Targeting</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted);">Institutional intervention roadmap and baseline vs projected goal rates.</p>
+            </div>
+            <span class="badge badge-success">Target Interventions</span>
+          </div>
+
+          <div class="card-grid-2">
+            <div class="card" style="box-shadow:none; border:1px solid #e2e8f0;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.75rem; font-weight:700;">Baseline vs Projected Compliance with Proposed Strategies</h4>
+              <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">Projected 3-year campus health gains across the 4 major dietary vulnerability metrics.</p>
+              <div style="height:280px; position:relative;">
+                <canvas id="chartStrategyImpact"></canvas>
+              </div>
+            </div>
+
+            <div class="card" style="box-shadow:none; border:1px solid #e2e8f0;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.75rem; font-weight:700;">Tableau Public Publishing & Embed Guide</h4>
+              <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:1rem;">
+                The complete Tableau Workbook (<code>college_food_choices_analytics.twb</code>) is preconfigured with all 16 calculated fields, 15 worksheets, and 4 dashboards.
+              </p>
+              <div style="background:#f1f5f9; padding:0.85rem; border-radius:6px; font-family:var(--font-mono); font-size:0.8rem; color:#1e293b; overflow-x:auto;">
+                &lt;div class='tableauPlaceholder' id='viz1698249'&gt;<br>
+                &nbsp;&nbsp;&lt;object class='tableauViz' width='100%' height='850'&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;param name='name' value='CollegeFoodChoices%2FExecutiveOverview' /&gt;<br>
+                &nbsp;&nbsp;&lt;/object&gt;<br>
+                &lt;/div&gt;
+              </div>
+              <div style="margin-top:1rem;">
+                <a href="../tableau/college_food_choices_analytics.twb" download class="btn btn-primary btn-sm">Download Production Workbook</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW: INSIGHTS
+         =================================================================== -->
+    <section id="view-insights" class="page-view">
+      <div class="section-header">
+        <h1 class="section-title">Data-Driven Insights</h1>
+        <p class="section-subtitle">Structured empirical findings calculated directly from the validated dataset answering the 15 analytical questions.</p>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+        <button class="btn btn-primary btn-sm insight-filter-btn active" data-category="all">All Insights</button>
+        <button class="btn btn-secondary btn-sm insight-filter-btn" data-category="dietary">Dietary Habits</button>
+        <button class="btn btn-secondary btn-sm insight-filter-btn" data-category="lifestyle">Lifestyle & Sleep</button>
+        <button class="btn btn-secondary btn-sm insight-filter-btn" data-category="academic">Academic Correlates</button>
+        <button class="btn btn-secondary btn-sm insight-filter-btn" data-category="financial">Budget & Housing</button>
+      </div>
+
+      <div id="insightsContainer">
+        <!-- Dynamically rendered insight cards -->
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW: DIETARY STRATEGIES
+         =================================================================== -->
+    <section id="view-strategies" class="page-view">
+      <div class="section-header">
+        <h1 class="section-title">Actionable Dietary Strategies</h1>
+        <p class="section-subtitle">Evidence-based institutional policies and student behavioral nudges to cultivate healthy campus food environments.</p>
+      </div>
+
+      <div class="disclaimer-banner">
+        <span>📢 <strong>Institutional Notice:</strong> These dietary strategies are data-informed behavioral and organizational recommendations designed for university administrators, student affairs, and dining operators. They do not constitute personalized medical diagnosis or individual clinical nutrition prescriptions.</span>
+      </div>
+
+      <div class="card-grid-2">
+        <div class="strategy-card">
+          <div class="badge badge-success" style="margin-bottom:0.5rem;">Strategy 1 • Morning Fuel</div>
+          <h3 class="strategy-title">Grab-and-Go Morning Cafeteria Kiosks</h3>
+          <p style="font-size:0.92rem; color:var(--text-main); margin-bottom:0.75rem;">
+            <strong>Context:</strong> Only 37.9% of students consume breakfast regularly ($\ge 5$ days/week), while breakfast skippers display lower average GPAs (3.28 vs 3.52).
+          </p>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            <strong>Implementation:</strong> Deploy mobile express breakfast kiosks across high-traffic academic corridors and lecture hall entrances between 7:30 AM and 10:00 AM. Provide whole fruit, Greek yogurt cups, oatmeal, and hard-boiled eggs covered under standard meal plan swipes.
+          </p>
+          <div style="background:#f8fafc; padding:0.75rem; border-radius:6px; font-size:0.85rem;">
+            <strong>Projected Target:</strong> Increase campus breakfast regularity rate from 37.9% to 65.0% over 2 academic semesters.
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="badge badge-success" style="margin-bottom:0.5rem;">Strategy 2 • Fresh Produce Access</div>
+          <h3 class="strategy-title">Subsidized Fresh Produce & "Farm-to-Quad" Popups</h3>
+          <p style="font-size:0.92rem; color:var(--text-main); margin-bottom:0.75rem;">
+            <strong>Context:</strong> Freshmen and on-campus dorm residents consume only 1.3 servings of fruit and 1.4 servings of vegetables daily, severely below USDA recommendations.
+          </p>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            <strong>Implementation:</strong> Partner with regional agricultural cooperatives to host bi-weekly subsidized campus farmers markets accepting campus dining dollars. Introduce pre-portioned $5 fresh produce bundles in dorm convenience marts.
+          </p>
+          <div style="background:#f8fafc; padding:0.75rem; border-radius:6px; font-size:0.85rem;">
+            <strong>Projected Target:</strong> Elevate average daily student produce consumption from 3.48 to $\ge 5.0$ combined servings.
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="badge badge-success" style="margin-bottom:0.5rem;">Strategy 3 • Hydration Infrastructure</div>
+          <h3 class="strategy-title">Campus-Wide Smart Hydration Refill Stations</h3>
+          <p style="font-size:0.92rem; color:var(--text-main); margin-bottom:0.75rem;">
+            <strong>Context:</strong> 30.3% of students drink under 2.0L of water daily, with 6.4% in severe daily deficit (< 1.0L).
+          </p>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            <strong>Implementation:</strong> Install touchless filtered water bottle refill stations in every residence hall floor and lecture facility. Distribute durable stainless-steel water bottles during freshman orientation featuring QR codes linking to campus hydration maps.
+          </p>
+          <div style="background:#f8fafc; padding:0.75rem; border-radius:6px; font-size:0.85rem;">
+            <strong>Projected Target:</strong> Achieve $\ge 88.0\%$ student population compliance with the 2.0L daily hydration guideline.
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="badge badge-success" style="margin-bottom:0.5rem;">Strategy 4 • Culinary Empowerment</div>
+          <h3 class="strategy-title">Residence Hall Kitchenettes & "Dorm Chef" Workshops</h3>
+          <p style="font-size:0.92rem; color:var(--text-main); margin-bottom:0.75rem;">
+            <strong>Context:</strong> Dorm students cook only 3.1 meals/week and consume fast food 3.4 days/week due to limited kitchen access and cooking inexperience.
+          </p>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            <strong>Implementation:</strong> Retrofit residence common lounges with induction cooktops, microwave steam cookers, and communal refrigerators. Host student-led 20-minute cooking demos teaching 5-ingredient balanced meals on a budget.
+          </p>
+          <div style="background:#f8fafc; padding:0.75rem; border-radius:6px; font-size:0.85rem;">
+            <strong>Projected Target:</strong> Double dorm cooking frequency from 3.1 to 6.2 meals/week; reduce fast food frequency by 35%.
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="badge badge-success" style="margin-bottom:0.5rem;">Strategy 5 • Late-Night Nourishment</div>
+          <h3 class="strategy-title">Nutrient-Dense Late-Night Dining Hall Counterparts</h3>
+          <p style="font-size:0.92rem; color:var(--text-main); margin-bottom:0.75rem;">
+            <strong>Context:</strong> High-stress students consume 42% more soft drinks and fast food, especially during midterms and finals when commercial fast food delivery is the sole option.
+          </p>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            <strong>Implementation:</strong> Extend campus library cafe hours until 1:00 AM offering warm grain bowls, protein wraps, vegetable soups, and herbal teas as high-nutrition alternatives to deep-fried commercial deliveries.
+          </p>
+          <div style="background:#f8fafc; padding:0.75rem; border-radius:6px; font-size:0.85rem;">
+            <strong>Projected Target:</strong> Cut high-stress student fast-food reliance from 3.5 to $\le 2.0$ days/week.
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="badge badge-success" style="margin-bottom:0.5rem;">Strategy 6 • Grocery Financial Literacy</div>
+          <h3 class="strategy-title">"Budget Bites": Financial Literacy & Grocery Navigation</h3>
+          <p style="font-size:0.92rem; color:var(--text-main); margin-bottom:0.75rem;">
+            <strong>Context:</strong> Students spending under $250/month exhibit a 2.4x produce deficit, misperceiving whole foods as universally unaffordable compared to processed items.
+          </p>
+          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
+            <strong>Implementation:</strong> Launch a digital campus app providing weekly grocery meal plans optimized under $40/week, unit price comparison tutorials, and batch cooking guides for frozen and canned produce.
+          </p>
+          <div style="background:#f8fafc; padding:0.75rem; border-radius:6px; font-size:0.85rem;">
+            <strong>Projected Target:</strong> Boost Dietary Health Scores among low-budget student cohorts by an average of +12.5 index points.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW: METHODOLOGY
+         =================================================================== -->
+    <section id="view-methodology" class="page-view">
+      <div class="section-header">
+        <h1 class="section-title">Methodological Framework</h1>
+        <p class="section-subtitle">Rigorous documentation of data curation, cleaning audits, scoring models, and analytical guardrails.</p>
+      </div>
+
+      <div class="card" style="margin-bottom: 2rem;">
+        <h3 style="font-size:1.25rem; margin-bottom:1rem; color:var(--text-main);">Analytical Architecture & Pipeline</h3>
+        <div style="background:#f8fafc; padding:1.25rem; border-radius:8px; border-left:4px solid var(--primary); font-size:0.95rem; line-height:1.7;">
+          <code>Data Collection (Raw N=1,255)</code> ➔ <code>Data Cleaning & Audit (Deduplication, Range Filtering, Cohort Median Imputation)</code> ➔ <code>Feature Engineering (Dietary Health Score 0–100)</code> ➔ <code>Exploratory Data Analysis (Pearson Correlations, Bivariate Testing)</code> ➔ <code>Tableau Engineering (16 Calculated Fields, 15 Worksheets)</code> ➔ <code>Interactive Dashboards (4 Modules)</code> ➔ <code>Institutional Strategies</code>
+        </div>
+      </div>
+
+      <div class="card-grid-2">
+        <div class="card">
+          <h3 style="font-size:1.15rem; margin-bottom:0.75rem; color:var(--text-main);">1. Data Cleaning & Integrity Audits</h3>
+          <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+            The raw data generation incorporated deliberate real-world survey quality issues:
+          </p>
+          <ul style="padding-left:1.25rem; font-size:0.88rem; color:var(--text-muted); margin-top:0.5rem; display:flex; flex-direction:column; gap:0.4rem;">
+            <li><strong>Deduplication:</strong> 5 identical student rows removed based on unique <code>Student_ID</code>.</li>
+            <li><strong>Casing Harmonization:</strong> Rectified mixed capitalization across <code>Gender</code> and <code>Residence_Type</code>.</li>
+            <li><strong>Domain Validation:</strong> Identified and rectified impossible ages (e.g. 145, -4), GPAs (>4.0, negative), and water volumes (>80L).</li>
+            <li><strong>Principled Imputation:</strong> Cohort medians applied to missing budget, water intake, and breakfast responses to preserve true distribution variances.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size:1.15rem; margin-bottom:0.75rem; color:var(--text-main);">2. Dietary Health Score Model</h3>
+          <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+            A multi-attribute scoring model (0–100 points) evaluating behavioral alignment with dietary guidelines:
+          </p>
+          <ul style="padding-left:1.25rem; font-size:0.88rem; color:var(--text-muted); margin-top:0.5rem; display:flex; flex-direction:column; gap:0.4rem;">
+            <li><strong>Breakfast Regularity:</strong> Up to 15 points (0-1d: 3, 2-3d: 7, 4-5d: 11, 6-7d: 15).</li>
+            <li><strong>Fruit Consumption:</strong> Up to 15 points (0: 2, 1: 6, 2: 11, $\ge 3$: 15).</li>
+            <li><strong>Vegetable Consumption:</strong> Up to 15 points (0: 2, 1: 6, 2: 11, $\ge 3$: 15).</li>
+            <li><strong>Hydration Volume:</strong> Up to 15 points (1.6–3.5L scored 12–15 pts).</li>
+            <li><strong>Fast Food Moderation (Inverted):</strong> Up to 15 points ($\le 1$d: 15, $\ge 5$d: 1).</li>
+            <li><strong>Soft Drink Moderation (Inverted):</strong> Up to 15 points ($\le 1$ can: 15, $\ge 7$ cans: 1).</li>
+            <li><strong>Meal Regularity:</strong> Up to 10 points (Regular: 10, Somewhat: 6, Irregular: 2).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1.5rem;">
+        <h3 style="font-size:1.15rem; margin-bottom:0.75rem; color:var(--text-main);">3. Scientific Guardrail: Correlation vs Causation</h3>
+        <p style="font-size:0.92rem; color:var(--text-muted); line-height:1.7;">
+          In observational survey analytics, establishing causation requires randomized controlled intervention trials (RCTs). A student with regular breakfast consumption may attain higher GPAs not solely due to morning glucose stabilization, but because regular breakfast co-occurs with earlier wake times, conscientious calendar management, consistent class attendance, and emotional stability. Throughout this project, all findings are framed strictly as empirical associations.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW: DATA DICTIONARY
+         =================================================================== -->
+    <section id="view-dictionary" class="page-view">
+      <div class="section-header">
+        <h1 class="section-title">Data Dictionary</h1>
+        <p class="section-subtitle">Formal variable definitions, storage data types, classification types, units of measurement, and sample values.</p>
+      </div>
+
+      <!-- Search Controls -->
+      <div class="explorer-controls" style="margin-bottom:1.5rem;">
+        <div class="explorer-filters">
+          <div class="form-group" style="flex:2;">
+            <label class="form-label" for="dictSearch">Search Field Name or Description</label>
+            <input type="text" id="dictSearch" class="form-input" placeholder="e.g. GPA, Dietary, Water, Fast_Food...">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="dictTypeFilter">Variable Classification</label>
+            <select id="dictTypeFilter" class="form-select">
+              <option value="">All Variable Classifications</option>
+              <option value="Categorical">Categorical</option>
+              <option value="Numerical">Numerical</option>
+              <option value="Discrete">Discrete</option>
+              <option value="Continuous">Continuous</option>
+              <option value="Ordinal">Ordinal</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dictionary Table -->
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Field Name</th>
+              <th>Description</th>
+              <th>Data Type</th>
+              <th>Variable Type</th>
+              <th>Measurement Unit</th>
+              <th>Allowed Range / Values</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody id="dictTableBody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW: REPORT
+         =================================================================== -->
+    <section id="view-report" class="page-view">
+      <div class="section-header" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <h1 class="section-title">Comprehensive Project Report</h1>
+          <p class="section-subtitle">Publication-quality formal academic and industry case study documentation.</p>
+        </div>
+        <div>
+          <button id="printReportBtn" class="btn btn-primary btn-sm">Print / Export PDF</button>
+        </div>
+      </div>
+
+      <div class="report-paper">
+        <div style="text-align:center; margin-bottom:2.5rem; border-bottom:2px solid var(--border-light); padding-bottom:1.5rem;">
+          <h1 style="font-size:2.2rem; font-weight:800; line-height:1.2; margin-bottom:0.5rem;">
+            Comprehensive Analysis and Dietary Strategies with Tableau: A College Food Choices Case Study
+          </h1>
+          <p style="font-size:1rem; color:var(--text-muted); font-weight:500;">
+            Institutional Data Analytics & Behavioral Strategy Research Report
+          </p>
+          <p style="font-size:0.85rem; color:var(--text-subtle); margin-top:0.5rem;">
+            Sample Size: N = 1,250 Validated University Students • Analytical Platform: Tableau 2023.2 & Python 3.6
+          </p>
+        </div>
+
+        <h2>1. Abstract</h2>
+        <p>
+          University students navigate an environment characterized by erratic academic schedules, social stress, financial limitations, and pervasive access to ultra-processed fast food. This case study analyzes a cross-sectional dataset of 1,250 validated student records to investigate dietary habits, lifestyle behaviors, and academic performance. Using exploratory data analysis, correlation testing, and Tableau dashboard suites, we engineered a transparent 0–100 Dietary Health Score. Our findings reveal that while 53.9% of students consume fast food $\ge 3$ days per week, only 37.9% consume breakfast regularly. Living arrangements represent the primary environmental determinant of dietary quality: dormitory residents cook an average of 3.1 meals weekly compared to 10.4 for students living with family. Breakfast regularity and sufficient nightly sleep (7.0–8.0 hours) exhibit positive associations with cumulative GPA ($r = +0.36$). Six institutional, data-informed intervention strategies are proposed to enhance student nutritional wellness without presenting clinical or diagnostic claims.
+        </p>
+
+        <h2>2. Introduction & Background</h2>
+        <p>
+          Transitioning to university life represents a critical window during which lifelong lifestyle habits are codified. As emerging adults assume full responsibility for grocery acquisition and culinary preparation, institutional meal environments and local food landscapes exert substantial influence. Emerging public health literature consistently highlights that college populations experience elevated rates of nutritional inadequacy, produce deficits, and energy drink reliance. Understanding these behavioral clusters is paramount for university administrations striving to bolster student retention, mental well-being, and academic success.
+        </p>
+
+        <h2>3. Problem Statement</h2>
+        <p>
+          While academic performance is conventionally analyzed through attendance and study hours, biological foundational pillars—specifically dietary quality, sleep hygiene, and physical activity—are frequently neglected in institutional analytics. University dining planners lack centralized, segment-specific insights regarding how dormitory housing, stress levels, and monthly food allowances restrict nutritious choices. This project solves that visibility gap through an integrated data analyst workflow and Tableau visualization platform.
+        </p>
+
+        <h2>4. Dataset & Data Cleaning Audit</h2>
+        <p>
+          The analysis investigated 1,250 validated records spanning 35 multidimensional attributes. Data cleaning incorporated systematic de-duplication (5 duplicate records purged), text case harmonization across categorical demographics, domain range boundary filtering (eliminating biologically impossible values such as negative ages or GPAs exceeding 4.0), and cohort median imputation for non-critical missing responses. Feature engineering derived the Dietary Health Score, Food Budget Utilization Rate, and discrete behavioral classification indicators.
+        </p>
+
+        <h2>5. Exploratory Data Analysis & Empirical Evidence</h2>
+        <p>
+          Statistical synthesis answers the core analytical questions:
+        </p>
+        <ul style="padding-left:1.5rem; margin-bottom:1rem;">
+          <li><strong>Breakfast Habits:</strong> Only 37.9% of students eat breakfast regularly ($\ge 5$ days/week). Students in the "Excellent" GPA tier eat breakfast an average of 4.6 days/week, compared to 2.8 days for the "Below Average" tier.</li>
+          <li><strong>Fast Food Reliance:</strong> 53.9% of the student cohort consumes fast food $\ge 3$ days weekly. Dormitory residents and Greek housing students exhibit the highest reliance (3.4 to 3.6 days/week).</li>
+          <li><strong>Hydration Deficit:</strong> Average daily water intake is 2.40L, with 30.3% of the student body failing to attain the 2.0L minimum daily hydration benchmark.</li>
+          <li><strong>Produce Consumption:</strong> Daily produce intake averages 1.63 fruit and 1.85 vegetable servings, falling short of national USDA guidelines.</li>
+          <li><strong>Rest & Academics:</strong> Nightly sleep duration is positively correlated with cumulative GPA (Pearson $r = +0.36$). Students averaging 7.0–8.0 hours of sleep maintain a mean GPA of 3.52, whereas sleep-deprived peers (< 6.0 hours) average 3.21.</li>
+          <li><strong>Stress Dynamics:</strong> High stress cohorts consume 42% more soft drinks and 35% more fast food meals than low stress cohorts, reflecting stress-induced coping behaviors.</li>
+        </ul>
+
+        <h2>6. Tableau Visual Analytics Architecture</h2>
+        <p>
+          Four specialized dashboards were constructed in Tableau:
+        </p>
+        <ol style="padding-left:1.5rem; margin-bottom:1rem;">
+          <li><strong>Executive Overview:</strong> High-level visibility into student counts, average GPA (3.42), dietary health score (63.6), and produce consumption across academic years.</li>
+          <li><strong>Dietary Behavior Deep-Dive:</strong> Granular multi-axis views comparing breakfast frequency, water intake distributions, and fast-food frequency across housing arrangements.</li>
+          <li><strong>Lifestyle & Academic Correlates:</strong> Scatterplots and regression trendlines illuminating sleep duration, exercise hours, and attendance against GPA.</li>
+          <li><strong>Dietary Strategy Roadmap:</strong> Cohort risk segmentation mapping targeted operational interventions against baseline vs. projected compliance metrics.</li>
+        </ol>
+
+        <h2>7. Data-Informed Dietary Strategies</h2>
+        <p>
+          In response to the identified behavioral vulnerabilities, six institutional interventions were developed:
+        </p>
+        <ul style="padding-left:1.5rem; margin-bottom:1rem;">
+          <li><em>Strategy 1: Morning Fuel Kiosks</em> — Deploying express breakfast stations at lecture hall entrances to counter the 62.1% non-regular breakfast rate.</li>
+          <li><em>Strategy 2: Subsidized Produce Markets</em> — Bi-weekly subsidized campus farmers markets and $5 produce grab bags in dorm mini-marts.</li>
+          <li><em>Strategy 3: Smart Hydration Refills</em> — Installing touchless water refill stations across every dormitory floor and orientation water bottle distribution.</li>
+          <li><em>Strategy 4: Residence Lounge Kitchenettes</em> — Equipping dorm lounges with induction cooktops and peer-led 20-minute culinary workshops.</li>
+          <li><em>Strategy 5: Nutrient-Dense Late-Night Offerings</em> — Extending healthy dining hall service until 1:00 AM during midterms and finals.</li>
+          <li><em>Strategy 6: Budget Bites Navigation</em> — Financial grocery literacy app teaching balanced meal preparation under $40 weekly.</li>
+        </ul>
+
+        <h2>8. Limitations & Analytical Guardrails</h2>
+        <p>
+          Several methodological boundaries must be underscored:
+        </p>
+        <ul style="padding-left:1.5rem; margin-bottom:1rem;">
+          <li><strong>Self-Reported Survey Bias:</strong> Dietary recall and physical activity responses are subject to social desirability bias and imperfect recall.</li>
+          <li><strong>Correlation vs. Causation:</strong> Observational associations do not establish biological or cognitive causation. Confounding factors such as baseline socioeconomic status, executive function, and mental health influence both dietary quality and GPA.</li>
+          <li><strong>Non-Clinical Scope:</strong> The Dietary Health Score is an exploratory population indexing heuristic; it is neither a validated medical diagnostic tool nor clinical assessment.</li>
+        </ul>
+
+        <h2>9. Conclusion</h2>
+        <p>
+          This case study demonstrates the power of rigorous data analytics and visual storytelling with Tableau in uncovering the environmental determinants of university student wellness. By addressing housing infrastructure deficits and morning scheduling hurdles with data-informed operational strategies, university leadership can cultivate an academic ecosystem that nurtures both student health and academic achievement.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================
+       RECORD DETAILS MODAL
+       =================================================================== -->
+  <div id="recordModal" class="modal-backdrop">
+    <div class="modal-content">
+      <button id="modalCloseBtn" class="modal-close">&times;</button>
+      <div id="modalDetailsBody">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <div style="font-weight:700; color:white; font-size:1.05rem;">College Food Choices Analytics Platform</div>
+        <div style="font-size:0.8rem; margin-top:0.25rem;">Comprehensive Tableau & Data Analytics Portfolio Case Study</div>
+      </div>
+      <div class="footer-links">
+        <a data-route="home" href="#home">Home</a>
+        <a data-route="explorer" href="#explorer">Data Explorer</a>
+        <a data-route="tableau" href="#tableau">Tableau Dashboards</a>
+        <a data-route="insights" href="#insights">Insights</a>
+        <a data-route="strategies" href="#strategies">Dietary Strategies</a>
+        <a data-route="report" href="#report">Report</a>
+      </div>
+    </div>
+    <div style="max-width:1360px; margin:1.5rem auto 0; padding-top:1.5rem; border-top:1px solid #1e293b; font-size:0.75rem; color:#64748b; text-align:center;">
+      Portfolio Project • Strict distinction maintained between correlation and causation • Not intended for clinical or medical dietary prescriptions.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/dataset.js"></script>
+  <script src="assets/js/eda_data.js"></script>
+  <script src="assets/js/dictionary_data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
